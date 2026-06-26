@@ -1,0 +1,53 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "wsl-gcc17-cxx29-debug",
+      "displayName": "WSL GCC17 C++29 Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "/opt/gcc-trunk/bin/gcc-trunk",
+        "CMAKE_CXX_COMPILER": "/opt/gcc-trunk/bin/g++-trunk",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "environment": {
+        "PATH": "/opt/gcc-trunk/bin:$penv{PATH}",
+        "LD_LIBRARY_PATH": "/opt/gcc-trunk/lib64:$penv{LD_LIBRARY_PATH}"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Linux"
+          ],
+          "intelliSenseMode": "linux-gcc-x64",
+          "intelliSenseOptions": {
+            "useCompilerDefaults": true,
+            "additionalCompilerArgs": [
+              "-std=gnu++29",
+              "-freflection"
+            ]
+          }
+        },
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "copyAdditionalIncludeDirectoriesList": [
+            "/opt/gcc-trunk/include/c++/17.0.0",
+            "/opt/gcc-trunk/include/c++/17.0.0/x86_64-pc-linux-gnu",
+            "/opt/gcc-trunk/include/c++/17.0.0/backward",
+            "/opt/gcc-trunk/lib/gcc/x86_64-pc-linux-gnu/17.0.0/include",
+            "/opt/gcc-trunk/lib/gcc/x86_64-pc-linux-gnu/17.0.0/include-fixed",
+            "/usr/include/x86_64-linux-gnu",
+            "/usr/include"
+          ]
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "wsl-gcc17-cxx29-debug",
+      "configurePreset": "wsl-gcc17-cxx29-debug"
+    }
+  ]
+}
