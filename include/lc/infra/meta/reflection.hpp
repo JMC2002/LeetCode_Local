@@ -14,7 +14,7 @@ consteval std::meta::info entry_of()
 {
     for (auto member : std::meta::members_of(
              ^^Solution, std::meta::access_context::current())) {
-        if (std::meta::is_public(member)                // 将头一个公有的
+        if (std::meta::is_public(member)                // 约定将头一个公有的
             && std::meta::has_identifier(member)        // 普通的
             && std::meta::is_user_provided(member)      // 用户提供的
             && !std::meta::is_deleted(member)           // 未被删除的
