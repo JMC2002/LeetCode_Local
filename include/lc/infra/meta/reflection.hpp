@@ -1,6 +1,7 @@
 #pragma once
 
 #include <complex>
+#include <functional>
 #include <meta>
 #include <ranges>
 #include <tuple>
