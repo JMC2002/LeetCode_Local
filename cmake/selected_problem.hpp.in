@@ -1,0 +1,36 @@
+#pragma once
+
+#include <array>
+#include <bit>
+#include <cstddef>
+#include <string_view>
+
+#include <lc/prelude.hpp>
+#include <lc/problem.hpp>
+#include "@LC_SOLUTION_FILE@"
+
+namespace lc::generated {
+
+inline constexpr std::size_t problem_id = @LC_ID@;
+
+inline constexpr auto raw_cases = [] consteval {
+    constexpr unsigned char bytes[] = {
+#embed "@LC_CASES_FILE@" suffix(, 0) if_empty(0)
+    };
+
+    return std::bit_cast<std::array<char, sizeof(bytes)>>(bytes);
+}();
+
+inline constexpr std::string_view cases{raw_cases.data(), raw_cases.size() - 1};
+
+} // namespace lc::generated
+
+namespace lc {
+
+template<>
+struct problem<@LC_ID@> {
+    using solution_type = ::Solution;
+    static constexpr auto cases = generated::cases;
+};
+
+} // namespace lc
