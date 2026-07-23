@@ -44,10 +44,7 @@ int run()
     infra::cases::parser parser{selected_problem::cases};
     std::size_t checked = 0, passed = 0;
 
-    println(
-        heading,
-        "LC {} :: Solution::{}", Id,
-        std::meta::identifier_of(entry));
+    println(heading, "LC {} :: Solution::{}", Id, std::meta::identifier_of(entry));
 
     for (std::size_t test_case = 1; test_case <= test_count; ++test_case) {
         auto parsed_case =
@@ -61,24 +58,16 @@ int run()
 
         const auto actual_text = infra::cases::serialize(actual);
         if (!expected) {
-            println(
-                running,
-                "[RUN ] 用例 {:>2}：{}", test_case, actual_text);
+            println(running, "[RUN ] 用例 {:>2}：{}", test_case, actual_text);
             continue;
         }
 
         ++checked;
         if (actual == *expected) {
             ++passed;
-            println(
-                success,
-                "[PASS] 用例 {:>2}：{}", test_case, actual_text);
+            println(success, "[PASS] 用例 {:>2}：{}", test_case, actual_text);
         } else {
-            println(
-                failure,
-                "[FAIL] 用例 {:>2}：实际 {}，期望 {}",
-                test_case, actual_text,
-                infra::cases::serialize(*expected));
+            println(failure, "[FAIL] 用例 {:>2}：实际 {}，期望 {}", test_case, actual_text, infra::cases::serialize(*expected));
         }
     }
 
