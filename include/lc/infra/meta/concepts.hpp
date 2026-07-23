@@ -1,7 +1,6 @@
 #pragma once
 
 #include <concepts>
-#include <cstddef>
 #include <meta>
 #include <tuple>
 #include <type_traits>
@@ -58,7 +57,6 @@ concept runnable_solution = std::default_initializable<Solution>
 template<class Spec>
 concept problem_spec = requires {
     typename Spec::solution_type;
-    { Spec::id } -> std::convertible_to<std::size_t>;
     { Spec::cases.data() } -> std::convertible_to<const char*>;
     { Spec::cases.size() } -> std::convertible_to<std::size_t>;
 };
