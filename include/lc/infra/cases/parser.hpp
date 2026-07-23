@@ -245,6 +245,8 @@ protected:
 
     template<class Sink>
     static constexpr std::size_t emit_utf8(std::uint32_t codepoint, Sink& sink)
+        pre(codepoint <= 0x10FFFF)
+        pre(codepoint < 0xD800 || codepoint > 0xDFFF)
     {
         const std::size_t size = codepoint <= 0x7F ? 1
             : codepoint <= 0x7FF ? 2
