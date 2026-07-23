@@ -9,6 +9,7 @@
 #include <inplace_vector>
 #include <iterator>
 #include <limits>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <tuple>
@@ -58,6 +59,12 @@ using validation_result = std::expected<validation_summary, case_error>;
 
 template<class T>
 using parse_result = std::expected<std::remove_cvref_t<T>, case_error>;
+
+template<class Arguments, class Expected>
+struct case_record {
+    Arguments arguments;
+    std::optional<Expected> expected;
+};
 
 using static_message = std::inplace_vector<char, 256>;
 
@@ -597,7 +604,7 @@ consteval validation_result validate(std::string_view input)
     return validator{input}.template validate<Arguments, Expected>();
 }
 
-class parser : public cursor {
+class parser : cursor {
     std::size_t test_case_ = 0;
     std::size_t argument_ = 0;
 
@@ -706,9 +713,6 @@ class parser : public cursor {
         }
     }
 
-public:
-    using cursor::cursor;
-
     template<parseable T>
     parse_result<T> parse(std::size_t test_case, std::size_t argument)
     {
@@ -723,6 +727,34 @@ public:
         test_case_ = test_case;
         argument_ = 0;
         return parse_tuple<Tuple>();
+    }
+
+public:
+    using cursor::cursor;
+
+    template<case_arguments Arguments, parseable Expected>
+    parse_result<case_record<Arguments, Expected>>
+    parse_case(std::size_t test_case)
+    {
+        auto arguments = parse_arguments<Arguments>(test_case);
+        if (!arguments) {
+            return std::unexpected(arguments.error());
+        }
+
+        std::optional<Expected> expected;
+        if (take_arrow()) {
+            auto value = parse<Expected>(
+                test_case, std::tuple_size_v<Arguments> + 1);
+            if (!value) {
+                return std::unexpected(value.error());
+            }
+            expected.emplace(std::move(*value));
+        }
+
+        return case_record<Arguments, Expected>{
+            .arguments = std::move(*arguments),
+            .expected = std::move(expected),
+        };
     }
 };
 

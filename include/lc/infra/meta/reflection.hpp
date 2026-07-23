@@ -46,11 +46,24 @@ template<class Solution>
 using return_t = [:std::meta::remove_cvref(
     std::meta::return_type_of(entry_v<Solution>)):];
 
+template<class Solution>
+using output_t = std::conditional_t<
+    std::is_void_v<return_t<Solution>>,
+    std::tuple_element_t<0, arguments_t<Solution>>,
+    return_t<Solution>>;
+
 template<class Solution, class Tuple>
-decltype(auto) invoke(Solution& solution, Tuple& arguments)
+output_t<Solution> evaluate(Tuple& arguments)
 {
-    auto& [...args] = arguments;
-    return solution.[:entry_v<Solution>:](args...);
+    Solution solution{};
+    auto& [first, ...rest] = arguments;
+
+    if constexpr (std::is_void_v<return_t<Solution>>) {
+        solution.[:entry_v<Solution>:](first, rest...);
+        return first;
+    } else {
+        return solution.[:entry_v<Solution>:](first, rest...);
+    }
 }
 
 } // namespace lc::infra::meta
