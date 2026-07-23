@@ -62,8 +62,8 @@
     },
     {
       "name": "wsl-gcc17-cxx29-debug",
-      "displayName": "WSL GCC 17 trunk - C++29 - Debug",
-      "description": "Debug build in Ubuntu-26.04 with GCC 17 trunk and C++29",
+      "displayName": "GCC 17 - C++29 - Debug",
+      "description": "在 Ubuntu-26.04 中使用 GCC 17 trunk 和 C++29 进行调试构建",
       "inherits": "wsl-gcc17-cxx29-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
@@ -71,8 +71,8 @@
     },
     {
       "name": "wsl-gcc17-cxx29-release",
-      "displayName": "WSL GCC 17 trunk - C++29 - Release",
-      "description": "Release build in Ubuntu-26.04 with GCC 17 trunk and C++29",
+      "displayName": "GCC 17 - C++29 - Release",
+      "description": "在 Ubuntu-26.04 中使用 GCC 17 trunk 和 C++29 进行发布构建",
       "inherits": "wsl-gcc17-cxx29-base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
@@ -82,13 +82,13 @@
   "buildPresets": [
     {
       "name": "wsl-gcc17-cxx29-debug",
-      "displayName": "Build WSL GCC 17 trunk - C++29 - Debug",
+      "displayName": "GCC 17 - C++29 - Debug",
       "configurePreset": "wsl-gcc17-cxx29-debug",
       "verbose": true
     },
     {
       "name": "wsl-gcc17-cxx29-release",
-      "displayName": "Build WSL GCC 17 trunk - C++29 - Release",
+      "displayName": "GCC 17 - C++29 - Release",
       "configurePreset": "wsl-gcc17-cxx29-release",
       "verbose": true
     }
