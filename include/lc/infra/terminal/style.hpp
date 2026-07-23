@@ -12,7 +12,7 @@
 
 namespace lc::infra::terminal {
 
-enum class Style {
+enum class style {
     heading,
     running,
     success,
@@ -21,10 +21,10 @@ enum class Style {
     muted,
 };
 
-constexpr std::string_view escape(Style style)
+constexpr std::string_view escape(style value)
 {
-    using enum Style;
-    switch (style) {
+    using enum style;
+    switch (value) {
     case heading: return "\x1b[1;96m"; // 加粗亮青色
     case running: return "\x1b[96m";   // 亮青色
     case success: return "\x1b[1;92m"; // 加粗亮绿色
@@ -56,13 +56,13 @@ inline bool colors_enabled()
 }
 
 template<class... Arguments>
-void println(Style style,
+void println(style value,
              std::format_string<Arguments...> fmt,
              Arguments&&... args)
 {
     const auto text = std::format(fmt, std::forward<Arguments>(args)...);
     if (colors_enabled()) {
-        std::println("{}{}\x1b[0m", escape(style), text);
+        std::println("{}{}\x1b[0m", escape(value), text);
     } else {
         std::println("{}", text);
     }
