@@ -1,0 +1,14 @@
+"z"
+=> "z"
+
+"babab"
+=> "abbba"
+
+"daccad"
+=> "acddca"
+
+"yey"
+=> "yey"
+
+"zpz"
+=> "zpz"
