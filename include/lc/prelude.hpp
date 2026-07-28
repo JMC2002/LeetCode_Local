@@ -20,6 +20,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <debugging>
 #include <expected>
 #include <format>
 #include <functional>
