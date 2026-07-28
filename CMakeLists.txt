@@ -51,6 +51,7 @@ configure_file(
 )
 
 add_executable(lc src/main.cpp)
+target_link_libraries(lc PRIVATE stdc++exp)
 
 set_target_properties(lc PROPERTIES
     CXX_STANDARD 26
