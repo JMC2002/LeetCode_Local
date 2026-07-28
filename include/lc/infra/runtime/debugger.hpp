@@ -28,8 +28,8 @@ inline void keep_console_open_for_debugger()
     if (!debugger_attached()) {
         return;
     }
-    terminal::println(terminal::style::muted, "\n按 Enter 键关闭...");
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    // terminal::println(terminal::style::muted, "\n按 Enter 键关闭...");
+    // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 } // namespace lc::infra::runtime
