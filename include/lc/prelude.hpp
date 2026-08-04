@@ -20,6 +20,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <cstring>
 #include <debugging>
 #include <expected>
 #include <format>
@@ -27,6 +28,7 @@
 #include <limits>
 #include <map>
 #include <meta>
+#include <memory>
 #include <optional>
 #include <print>
 #include <ranges>
