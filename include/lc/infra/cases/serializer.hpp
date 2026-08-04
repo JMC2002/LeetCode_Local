@@ -2,6 +2,7 @@
 
 #include <charconv>
 #include <concepts>
+#include <format>
 #include <iterator>
 #include <limits>
 #include <stdexcept>
@@ -13,9 +14,8 @@
 
 namespace lc::infra::cases {
 
-inline void append_escaped(std::string& output, std::string_view value)
+inline void append_escaped_content(std::string& output, std::string_view value)
 {
-    output.push_back('"');
     for (const char ch : value) {
         switch (ch) {
         case '"': output += "\\\""; break;
@@ -28,6 +28,12 @@ inline void append_escaped(std::string& output, std::string_view value)
         default: output.push_back(ch); break;
         }
     }
+}
+
+inline void append_escaped(std::string& output, std::string_view value)
+{
+    output.push_back('"');
+    append_escaped_content(output, value);
     output.push_back('"');
 }
 
