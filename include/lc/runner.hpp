@@ -10,6 +10,7 @@
 #include <lc/infra/meta/concepts.hpp>
 #include <lc/infra/meta/reflection.hpp>
 #include <lc/infra/runtime/debugger.hpp>
+#include <lc/infra/runtime/timestamp.hpp>
 #include <lc/infra/terminal/style.hpp>
 #include <lc/problem.hpp>
 
@@ -44,6 +45,7 @@ int run()
     infra::cases::parser parser{selected_problem::cases};
     std::size_t checked = 0, passed = 0;
 
+    println(muted, "[{}]", infra::runtime::current_local_timestamp());
     println(heading, "LC {} :: Solution::{}", Id, std::meta::identifier_of(entry));
 
     for (std::size_t test_case = 1; test_case <= test_count; ++test_case) {
