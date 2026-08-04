@@ -35,6 +35,7 @@
           }
         },
         "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "forceWSL1Toolset": true,
           "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}",
           "copySources": true,
           "copySourcesOptions": {

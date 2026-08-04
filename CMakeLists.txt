@@ -30,7 +30,33 @@ string(STRIP "${LC_ID}" LC_ID)
 # 现在所有 IDE 都只以 current_problem.txt 为题号来源。
 unset(LC_ID CACHE)
 
+option(
+    LC_AUTO_FETCH_MISSING
+    "配置时自动拉取本地不存在的力扣题目"
+    OFF
+)
+set(LC_FETCH_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/tools/fetch_problem.py")
+find_package(Python3 QUIET COMPONENTS Interpreter)
+
+if(Python3_Interpreter_FOUND)
+    add_executable(fetch tools/fetch_launcher.cpp)
+    target_compile_features(fetch PRIVATE cxx_std_17)
+    target_compile_definitions(fetch PRIVATE
+        LC_FETCH_PYTHON="${Python3_EXECUTABLE}"
+        LC_FETCH_SCRIPT="${LC_FETCH_SCRIPT}"
+    )
+else()
+    message(WARNING "找不到 Python 3，fetch 启动目标不可用")
+endif()
+
 include(cmake/SelectProblem.cmake)
+
+if(NOT LC_PROBLEM_FOUND)
+    message(WARNING
+        "力扣题目 ${LC_ID} 尚未拉取；请选择 Visual Studio 启动目标 fetch 并运行"
+    )
+    return()
+endif()
 
 file(RELATIVE_PATH LC_SOLUTION_FILE
     "${CMAKE_CURRENT_SOURCE_DIR}"
