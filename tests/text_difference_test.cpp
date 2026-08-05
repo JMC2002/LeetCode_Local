@@ -2,6 +2,7 @@
 #include <lc/infra/diff/myers.hpp>
 #include <lc/infra/diff/range.hpp>
 #include <lc/infra/diff/value.hpp>
+#include <lc/infra/cases/parser.hpp>
 #include <lc/infra/terminal/difference.hpp>
 
 #include <array>
@@ -12,6 +13,7 @@
 #include <span>
 #include <string>
 #include <string_view>
+#include <tuple>
 #include <vector>
 
 namespace {
@@ -233,6 +235,23 @@ void test_alignment_normalization()
         "RUA");
 }
 
+void test_argument_source()
+{
+    using arguments = std::tuple<std::vector<int>, std::string>;
+    lc::infra::cases::parser parser{
+        "  [1, 2]\n\"a\\\\n\" \n=> 4"};
+    const auto parsed = parser.parse_case<arguments, int>(1);
+    if (!parsed) {
+        ++failures;
+        std::println(stderr, "[FAIL] 原始参数文本解析失败");
+        return;
+    }
+    expect_equal(
+        "原始参数文本",
+        parsed->arguments_source,
+        "[1, 2]\n\"a\\\\n\"");
+}
+
 } // namespace
 
 int main()
@@ -251,6 +270,7 @@ int main()
     test_myers_against_lcs();
     test_common_prefix_size();
     test_alignment_normalization();
+    test_argument_source();
 
     expect_equal(
         "手动选择算法",

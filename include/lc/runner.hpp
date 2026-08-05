@@ -59,7 +59,8 @@ int run()
         if (!parsed_case) {
             return report_error(parsed_case.error());
         }
-        auto [arguments, expected] = std::move(*parsed_case);
+        auto [arguments, expected, arguments_source] =
+            std::move(*parsed_case);
 
         const auto actual = infra::meta::evaluate<solution_type>(arguments);
 
@@ -75,6 +76,7 @@ int run()
             println(success, "[PASS] 用例 {:>2}：{}", test_case, actual_text);
         } else {
             println(failure, "[FAIL] 用例 {:>2}", test_case);
+            println(muted, "  输入：{}", arguments_source);
             infra::terminal::print_difference<difference_algorithm>(
                 actual, *expected);
         }

@@ -106,8 +106,9 @@ target_compile_options(lc PRIVATE
 include(CTest)
 if(BUILD_TESTING)
     add_executable(lc_text_difference_tests tests/text_difference_test.cpp)
+    target_link_libraries(lc_text_difference_tests PRIVATE stdc++exp)
     set_target_properties(lc_text_difference_tests PROPERTIES
-        CXX_STANDARD 23
+        CXX_STANDARD 26
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
     )
@@ -115,6 +116,9 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
     )
     target_compile_options(lc_text_difference_tests PRIVATE
+        -std=c++29
+        -freflection
+        -fcontracts
         -Wall
         -Wextra
         -Wpedantic

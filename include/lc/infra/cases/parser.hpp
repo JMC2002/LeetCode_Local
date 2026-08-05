@@ -64,6 +64,7 @@ template<class Arguments, class Expected>
 struct case_record {
     Arguments arguments;
     std::optional<Expected> expected;
+    std::string_view arguments_source;
 };
 
 using static_message = std::inplace_vector<char, 256>;
@@ -736,10 +737,13 @@ public:
     parse_result<case_record<Arguments, Expected>>
     parse_case(std::size_t test_case)
     {
+        skip_space();
+        const std::size_t arguments_begin = offset_;
         auto arguments = parse_arguments<Arguments>(test_case);
         if (!arguments) {
             return std::unexpected(arguments.error());
         }
+        const std::size_t arguments_end = offset_;
 
         std::optional<Expected> expected;
         if (take_arrow()) {
@@ -754,6 +758,8 @@ public:
         return case_record<Arguments, Expected>{
             .arguments = std::move(*arguments),
             .expected = std::move(expected),
+            .arguments_source = input_.substr(
+                arguments_begin, arguments_end - arguments_begin),
         };
     }
 };
