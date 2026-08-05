@@ -103,4 +103,23 @@ target_compile_options(lc PRIVATE
     -Wpedantic
 )
 
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(lc_text_difference_tests tests/text_difference_test.cpp)
+    set_target_properties(lc_text_difference_tests PROPERTIES
+        CXX_STANDARD 23
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS OFF
+    )
+    target_include_directories(lc_text_difference_tests PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    )
+    target_compile_options(lc_text_difference_tests PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+    )
+    add_test(NAME lc.text_difference COMMAND lc_text_difference_tests)
+endif()
+
 message(STATUS "力扣题目 ${LC_ID}：${LC_PROBLEM_DIR}")

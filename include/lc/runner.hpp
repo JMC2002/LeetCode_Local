@@ -7,14 +7,19 @@
 
 #include <lc/infra/cases/parser.hpp>
 #include <lc/infra/cases/serializer.hpp>
+#include <lc/infra/diff/myers.hpp>
 #include <lc/infra/meta/concepts.hpp>
 #include <lc/infra/meta/reflection.hpp>
 #include <lc/infra/runtime/debugger.hpp>
 #include <lc/infra/runtime/timestamp.hpp>
+#include <lc/infra/terminal/difference.hpp>
 #include <lc/infra/terminal/style.hpp>
 #include <lc/problem.hpp>
 
 namespace lc {
+
+// 替换此类型即可在编译期选择另一种 diff 核心算法。
+using difference_algorithm = infra::diff::myers_trace<>;
 
 template<std::size_t Id>
     requires infra::meta::runnable_problem<problem<Id>>
@@ -69,7 +74,9 @@ int run()
             ++passed;
             println(success, "[PASS] 用例 {:>2}：{}", test_case, actual_text);
         } else {
-            println(failure, "[FAIL] 用例 {:>2}：实际 {}，期望 {}", test_case, actual_text, infra::cases::serialize(*expected));
+            println(failure, "[FAIL] 用例 {:>2}", test_case);
+            infra::terminal::print_difference<difference_algorithm>(
+                actual, *expected);
         }
     }
 
