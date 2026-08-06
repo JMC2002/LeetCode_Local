@@ -31,8 +31,10 @@
 #include <memory>
 #include <optional>
 #include <print>
+#include <queue>
 #include <ranges>
 #include <span>
+#include <stack>
 #include <stdexcept>
 #include <string>
 #include <string_view>
