@@ -29,6 +29,7 @@
 #include <map>
 #include <meta>
 #include <memory>
+#include <numeric>
 #include <optional>
 #include <print>
 #include <queue>
