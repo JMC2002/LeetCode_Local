@@ -15,6 +15,7 @@
 #include <array>
 #include <charconv>
 #include <chrono>
+#include <climits>
 #include <cmath>
 #include <concepts>
 #include <cstddef>
